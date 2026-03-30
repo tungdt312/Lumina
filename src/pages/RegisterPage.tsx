@@ -42,11 +42,9 @@ const RegisterPage: React.FC = () => {
       setTimeout(() => {
         navigate('/login');
       }, 2000);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Registration error:', error);
-      const message = 
-        error.response?.data?.message || 
-        error.response?.data?.errors?.[0] ||
+      const message =
         'Registration failed. Please ensure all fields are correct and try again.';
       setErrorMessage(message);
     } finally {
@@ -157,7 +155,7 @@ const RegisterPage: React.FC = () => {
               </div>
 
               <div className="auth-field-group auth-field-group--full">
-                <label className="auth-label">Phone Number (Optional)</label>
+                <label className="auth-label">Phone Number</label>
                 <input
                   type="tel"
                   className="auth-input"
