@@ -44,7 +44,10 @@ const RegisterPage: React.FC = () => {
       }, 2000);
     } catch (error: any) {
       console.error('Registration error:', error);
-      const message = error.response?.data?.message || 'Registration failed. Please check your details.';
+      const message = 
+        error.response?.data?.message || 
+        error.response?.data?.errors?.[0] ||
+        'Registration failed. Please ensure all fields are correct and try again.';
       setErrorMessage(message);
     } finally {
       setIsLoading(false);
@@ -88,14 +91,27 @@ const RegisterPage: React.FC = () => {
           </div>
 
           {errorMessage && (
-            <div style={{ color: '#ef4444', backgroundColor: '#fee2e2', padding: '0.75rem', borderRadius: '8px', fontSize: '0.875rem', fontWeight: 600 }}>
+            <div className="auth-alert auth-alert--error" role="alert">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
               {errorMessage}
             </div>
           )}
 
           {successMessage && (
-            <div style={{ color: '#059669', backgroundColor: '#d1fae5', padding: '0.75rem', borderRadius: '8px', fontSize: '0.875rem', fontWeight: 600 }}>
+            <div className="auth-alert auth-alert--success" role="alert">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
               {successMessage}
+            </div>
+          )}
+
+          {isLoading && !errorMessage && !successMessage && (
+            <div className="auth-alert" style={{ backgroundColor: 'var(--auth-bg-light)', borderColor: 'var(--auth-border)', color: 'var(--auth-text-muted)' }}>
+              <span className="auth-spinner" />
+              Creating your Lumina account...
             </div>
           )}
 
