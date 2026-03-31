@@ -125,6 +125,7 @@ const RegisterPage: React.FC = () => {
                   onChange={e => setFullName(e.target.value)}
                   disabled={isLoading}
                   required
+                  aria-label="Full Name"
                 />
               </div>
 
@@ -138,6 +139,7 @@ const RegisterPage: React.FC = () => {
                   onChange={e => setUsername(e.target.value)}
                   disabled={isLoading}
                   required
+                  aria-label="Username"
                 />
               </div>
 
@@ -151,6 +153,7 @@ const RegisterPage: React.FC = () => {
                   onChange={e => setEmail(e.target.value)}
                   disabled={isLoading}
                   required
+                  aria-label="Email Address"
                 />
               </div>
 
@@ -163,6 +166,7 @@ const RegisterPage: React.FC = () => {
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
                   disabled={isLoading}
+                  aria-label="Phone Number"
                 />
               </div>
 
@@ -173,6 +177,7 @@ const RegisterPage: React.FC = () => {
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     style={{ background: 'none', border: 'none', fontSize: '0.75rem', fontWeight: 700, color: 'var(--auth-primary)', cursor: 'pointer' }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? 'HIDE' : 'SHOW'}
                   </button>
@@ -185,11 +190,12 @@ const RegisterPage: React.FC = () => {
                   onChange={e => setPassword(e.target.value)}
                   disabled={isLoading}
                   required
+                  aria-label="Secure Password"
                 />
               </div>
             </div>
 
-            <button type="submit" className="auth-btn-primary" disabled={isLoading}>
+            <button type="submit" className="auth-btn-primary" disabled={isLoading} aria-label="Sign Up Now">
               {isLoading ? 'Creating Account...' : 'Sign Up Now'}
             </button>
           </form>
@@ -197,7 +203,7 @@ const RegisterPage: React.FC = () => {
           <footer className="auth-footer">
             <p className="auth-footer-text">
               Already have an account?
-              <Link to="/login" className="auth-footer-link">Sign In</Link>
+              <Link to="/login" className="auth-footer-link" aria-label="Sign In">Sign In</Link>
             </p>
           </footer>
         </div>

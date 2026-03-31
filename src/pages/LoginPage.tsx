@@ -108,6 +108,7 @@ const LoginPage: React.FC = () => {
                   onChange={e => setIdentifier(e.target.value)}
                   disabled={isLoading}
                   required
+                  aria-label="Email or Username"
                 />
               </div>
 
@@ -123,11 +124,12 @@ const LoginPage: React.FC = () => {
                   onChange={e => setPassword(e.target.value)}
                   disabled={isLoading}
                   required
+                  aria-label="Password"
                 />
               </div>
             </div>
 
-            <button type="submit" className="auth-btn-primary" disabled={isLoading}>
+            <button type="submit" className="auth-btn-primary" disabled={isLoading} aria-label="Log In">
               {isLoading ? 'Signing In...' : 'Log In'}
             </button>
           </form>
@@ -148,7 +150,7 @@ const LoginPage: React.FC = () => {
           <footer className="auth-footer">
             <p className="auth-footer-text">
               New to Lumina?
-              <Link to="/register" className="auth-footer-link">Create Account</Link>
+              <Link to="/register" className="auth-footer-link" aria-label="Create Account">Create Account</Link>
             </p>
           </footer>
         </div>
