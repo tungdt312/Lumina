@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import apiClient from '../services/api';
 import './AuthPages.css';
+import registerBg from '../assets/register_bg.png';
 
 const LuminaLogo: React.FC = () => (
   <svg className="auth-logo-icon" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -16,7 +17,6 @@ const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -34,19 +34,14 @@ const RegisterPage: React.FC = () => {
         password,
         email,
         fullName,
-        phoneNumber: phone.replace(/\D/g, ''), // Basic cleaning to match pattern if needed
+        phoneNumber: phone.replace(/\D/g, ''),
       });
 
-      console.log('Registration successful');
-      setSuccessMessage('Account created successfully! Redirecting to login...');
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      setSuccessMessage('Registration Successful! Redirecting to login...');
+      setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
       console.error('Registration error:', error);
-      const message =
-        'Registration failed. Please ensure all fields are correct and try again.';
-      setErrorMessage(message);
+      setErrorMessage('Registration failed. Please check your information.');
     } finally {
       setIsLoading(false);
     }
@@ -54,64 +49,53 @@ const RegisterPage: React.FC = () => {
 
   return (
     <div className="auth-split-screen">
-      {/* Left Panel: Architectural Image with Dark Gradient Overlay */}
       <div className="auth-left-panel">
         <div
           className="auth-bg-image"
           style={{
-            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuBpR6ZK5l5P0bA2wPLPWBdMk-L2qh1hqGej1vrbny_UDakS9CaVFpxIGYFcXeDKz7AsL7_bO27mCr-JmnC5mEAY3hdtfU6gXQWyRZODlAiri3pMyTATNuGe76WZo2A5ObD16EC5QlPGIg45o15m_El9979ctLzldo4NenTmynbqBDMAKJtx3RVR5h6uiAqZND-lXbsSfUqaJ8KRNy73V3sSgyY-gdTjOxLJmRjdwubGehoxqJF-HuhyyY2VGEsp1qKzz0y1kuoKncv3')`,
+            backgroundImage: `url(${registerBg})`,
           }}
           role="img"
-          aria-label="Luxury architectural interior"
+          aria-label="Luxury architectural villa"
         />
         <div className="auth-overlay" />
         <div className="auth-left-content">
-          <div className="auth-brand">
+          <Link to="/" className="auth-brand" style={{ textDecoration: 'none' }}>
             <div className="auth-brand-logo-wrap">
               <LuminaLogo />
             </div>
             <span className="auth-brand-name">Lumina Realty</span>
-          </div>
-          <h2 className="auth-left-headline">Elevate your living experience.</h2>
+          </Link>
+          <h2 className="auth-left-headline">Join our premium community.</h2>
           <p className="auth-left-subtext">
-            Join an exclusive circle of visionary homeowners and architectural enthusiasts.
-            Your journey to premium living begins here.
+            Experience the most innovative property projects in Vietnam.
           </p>
         </div>
       </div>
 
-      {/* Right Panel: Form Section */}
       <div className="auth-right-panel">
+        <div className="auth-header-actions">
+          <Link to="/" className="auth-mobile-brand" style={{ textDecoration: 'none', marginBottom: 0 }}>
+            <div className="auth-mobile-brand-logo">
+              <LuminaLogo />
+            </div>
+            <span className="auth-mobile-brand-name">Lumina Realty</span>
+          </Link>
+
+          <Link to="/" className="auth-back-home">
+            <span className="material-symbols-outlined">arrow_back</span>
+            <span>Back to Home</span>
+          </Link>
+        </div>
+
         <div className="auth-form-container">
           <div className="auth-form-header">
-            <h1 className="auth-form-title">Create Account</h1>
-            <p className="auth-form-subtitle">Become a member of the Lumina Realty ecosystem.</p>
+            <h1 className="auth-form-title">Join Lumina</h1>
+            <p className="auth-form-subtitle">Register for exclusive property access and market updates.</p>
           </div>
 
-          {errorMessage && (
-            <div className="auth-alert auth-alert--error" role="alert">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
-              {errorMessage}
-            </div>
-          )}
-
-          {successMessage && (
-            <div className="auth-alert auth-alert--success" role="alert">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              {successMessage}
-            </div>
-          )}
-
-          {isLoading && !errorMessage && !successMessage && (
-            <div className="auth-alert" style={{ backgroundColor: 'var(--auth-bg-light)', borderColor: 'var(--auth-border)', color: 'var(--auth-text-muted)' }}>
-              <span className="auth-spinner" />
-              Creating your Lumina account...
-            </div>
-          )}
+          {errorMessage && <div className="auth-alert auth-alert--error">{errorMessage}</div>}
+          {successMessage && <div className="auth-alert auth-alert--success">{successMessage}</div>}
 
           <form className="auth-form" onSubmit={handleSubmit} noValidate>
             <div className="auth-fields-grid">
@@ -120,26 +104,24 @@ const RegisterPage: React.FC = () => {
                 <input
                   type="text"
                   className="auth-input"
-                  placeholder="John Doe"
+                  placeholder="e.g. Nguyen Van A"
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
                   disabled={isLoading}
                   required
-                  aria-label="Full Name"
                 />
               </div>
 
               <div className="auth-field-group">
-                <label className="auth-label">Username</label>
+                <label className="auth-label">Account Username</label>
                 <input
                   type="text"
                   className="auth-input"
-                  placeholder="johndoe_123"
+                  placeholder="nguyenan001"
                   value={username}
                   onChange={e => setUsername(e.target.value)}
                   disabled={isLoading}
                   required
-                  aria-label="Username"
                 />
               </div>
 
@@ -148,62 +130,49 @@ const RegisterPage: React.FC = () => {
                 <input
                   type="email"
                   className="auth-input"
-                  placeholder="john@example.com"
+                  placeholder="nguyenan@example.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   disabled={isLoading}
                   required
-                  aria-label="Email Address"
                 />
               </div>
 
               <div className="auth-field-group auth-field-group--full">
-                <label className="auth-label">Phone Number</label>
+                <label className="auth-label">Mobile Number</label>
                 <input
                   type="tel"
                   className="auth-input"
-                  placeholder="0987654321"
+                  placeholder="09xx xxx xxx"
                   value={phone}
                   onChange={e => setPhone(e.target.value)}
                   disabled={isLoading}
-                  aria-label="Phone Number"
                 />
               </div>
 
               <div className="auth-field-group auth-field-group--full">
-                <div className="auth-label-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <label className="auth-label">Secure Password</label>
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    style={{ background: 'none', border: 'none', fontSize: '0.75rem', fontWeight: 700, color: 'var(--auth-primary)', cursor: 'pointer' }}
-                    aria-label={showPassword ? 'Hide password' : 'Show password'}
-                  >
-                    {showPassword ? 'HIDE' : 'SHOW'}
-                  </button>
-                </div>
+                <label className="auth-label">Secure Password</label>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type="password"
                   className="auth-input"
                   placeholder="••••••••••••"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   disabled={isLoading}
                   required
-                  aria-label="Secure Password"
                 />
               </div>
             </div>
 
-            <button type="submit" className="auth-btn-primary" disabled={isLoading} aria-label="Sign Up Now">
-              {isLoading ? 'Creating Account...' : 'Sign Up Now'}
+            <button type="submit" className="auth-btn-primary" disabled={isLoading}>
+              {isLoading ? 'Processing...' : 'Register Now'}
             </button>
           </form>
 
           <footer className="auth-footer">
             <p className="auth-footer-text">
-              Already have an account?
-              <Link to="/login" className="auth-footer-link" aria-label="Sign In">Sign In</Link>
+              Already a Member?
+              <Link to="/login" className="auth-footer-link">Log In</Link>
             </p>
           </footer>
         </div>

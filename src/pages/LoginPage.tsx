@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import apiClient from '../services/api';
 import './AuthPages.css';
-
+import loginBg from '../assets/login_bg.png';
 
 const LuminaLogo: React.FC = () => (
   <svg className="auth-logo-icon" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -35,12 +35,21 @@ const LoginPage: React.FC = () => {
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
 
+      // Fetch current user info from the API (GET /api/v1/auth/me)
+      try {
+        const meResponse = await apiClient.get('/api/v1/auth/me');
+        const user = meResponse.data?.data;
+        const displayName = user?.fullName || user?.username || 'User';
+        localStorage.setItem('displayName', displayName);
+      } catch {
+        localStorage.setItem('displayName', 'User');
+      }
+
       console.log('Login successful');
-      navigate('/'); // Redirect to landing or dashboard
+      navigate('/');
     } catch (error) {
       console.error('Login error:', error);
-      const message =
-        'Authentication failed. Please check your credentials and try again.';
+      const message = 'Authentication failed. Please check your account details.';
       setErrorMessage(message);
     } finally {
       setIsLoading(false);
@@ -53,53 +62,64 @@ const LoginPage: React.FC = () => {
         <div
           className="auth-bg-image"
           style={{
-            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJNEIrwdSnuWGLUuD5lcDVYlwik2KBZTOm-qiMH2st0iBqHgQSkYCQeu6Q2yz1rUrkbnL-LBdokkyjKgB3sImb6MajlA1cIwaCCdW06v2lJs6gwaqoWrR7fUQyz-RZe4EifRH7Sghn8_RQO16avuhjfBKAf5X3jCGx19WRH_DTCBmInS5ihwJQEsHbjLoOTQnOQzljQ0INVuYo9BpLvoxIpnS-mBhID5faHzy7uVYWk1g9HagaHl3WNVW_Y4nOksbVUEomCnirARFA')`,
+            backgroundImage: `url(${loginBg})`,
           }}
           role="img"
-          aria-label="Modern building architecture"
+          aria-label="Modern luxury interior"
         />
         <div className="auth-overlay" />
         <div className="auth-left-content">
-          <div className="auth-brand">
+          <Link to="/" className="auth-brand" style={{ textDecoration: 'none' }}>
             <div className="auth-brand-logo-wrap">
               <LuminaLogo />
             </div>
             <span className="auth-brand-name">Lumina Realty</span>
-          </div>
-          <h2 className="auth-left-headline">Discover the future of high-fidelity living.</h2>
+          </Link>
+          <h2 className="auth-left-headline">Future-ready property management.</h2>
           <p className="auth-left-subtext">
-            Log in to access your dashboard, manage your properties, and stay connected with the Lumina ecosystem.
+            Access your property dashboard, tracking market insights and project status in real-time.
           </p>
         </div>
       </div>
 
       <div className="auth-right-panel">
+        <div className="auth-header-actions">
+          <Link to="/" className="auth-mobile-brand" style={{ textDecoration: 'none', marginBottom: 0 }}>
+            <div className="auth-mobile-brand-logo">
+              <LuminaLogo />
+            </div>
+            <span className="auth-mobile-brand-name">Lumina Realty</span>
+          </Link>
+
+          <Link to="/" className="auth-back-home">
+            <span className="material-symbols-outlined">arrow_back</span>
+            <span>Back to Home</span>
+          </Link>
+        </div>
+        
         <div className="auth-form-container">
           <div className="auth-form-header">
-            <h1 className="auth-form-title">Welcome Back</h1>
-            <p className="auth-form-subtitle">Please sign in to your Lumina account.</p>
+            <h1 className="auth-form-title">Welcome Home</h1>
+            <p className="auth-form-subtitle">Log in to manage your Lumina real estate projects.</p>
           </div>
 
           {errorMessage && (
             <div className="auth-alert auth-alert--error" role="alert">
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-              </svg>
               {errorMessage}
             </div>
           )}
 
           {isLoading && !errorMessage && (
-            <div className="auth-alert auth-alert--success" style={{ backgroundColor: 'var(--auth-bg-light)', borderColor: 'var(--auth-border)', color: 'var(--auth-text-muted)' }}>
+            <div className="auth-alert" style={{ background: 'var(--auth-bg-soft)', border: '1px solid var(--auth-border)' }}>
               <span className="auth-spinner" />
-              Authenticating with Lumina Secure...
+              Authenticating...
             </div>
           )}
 
           <form className="auth-form" onSubmit={handleSubmit} noValidate>
             <div className="auth-fields-grid">
               <div className="auth-field-group auth-field-group--full">
-                <label className="auth-label">Email or Username</label>
+                <label className="auth-label">Account Name / Email</label>
                 <input
                   type="text"
                   className="auth-input"
@@ -108,14 +128,11 @@ const LoginPage: React.FC = () => {
                   onChange={e => setIdentifier(e.target.value)}
                   disabled={isLoading}
                   required
-                  aria-label="Email or Username"
                 />
               </div>
 
               <div className="auth-field-group auth-field-group--full">
-                <div className="auth-label-row">
-                  <label className="auth-label">Password</label>
-                </div>
+                <label className="auth-label">Secure Password</label>
                 <input
                   type="password"
                   className="auth-input"
@@ -124,33 +141,19 @@ const LoginPage: React.FC = () => {
                   onChange={e => setPassword(e.target.value)}
                   disabled={isLoading}
                   required
-                  aria-label="Password"
                 />
               </div>
             </div>
 
-            <button type="submit" className="auth-btn-primary" disabled={isLoading} aria-label="Log In">
-              {isLoading ? 'Signing In...' : 'Log In'}
+            <button type="submit" className="auth-btn-primary" disabled={isLoading}>
+              {isLoading ? 'Processing...' : 'Log In'}
             </button>
           </form>
 
-          {/*<div className="auth-divider">*/}
-          {/*  <div className="auth-divider-line" />*/}
-          {/*  <span className="auth-divider-text">OR SIGN IN WITH</span>*/}
-          {/*  <div className="auth-divider-line" />*/}
-          {/*</div>*/}
-
-          {/*<div className="auth-social-grid">*/}
-          {/*  <button type="button" className="auth-social-btn w-full" disabled={isLoading}>*/}
-          {/*    <GoogleIcon />*/}
-          {/*    Google*/}
-          {/*  </button>*/}
-          {/*</div>*/}
-
           <footer className="auth-footer">
             <p className="auth-footer-text">
-              New to Lumina?
-              <Link to="/register" className="auth-footer-link" aria-label="Create Account">Create Account</Link>
+              New Member?
+              <Link to="/register" className="auth-footer-link">Join Lumina Now</Link>
             </p>
           </footer>
         </div>
