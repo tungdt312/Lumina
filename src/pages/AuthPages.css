@@ -236,7 +236,7 @@
   color: var(--auth-primary);
 }
 
-.auth-back-home span.material-symbols-outlined {
+.auth-back-home svg {
   font-size: 1.25rem;
 }
 

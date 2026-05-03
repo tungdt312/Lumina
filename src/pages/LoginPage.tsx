@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import apiClient from '../services/api';
+import { MdArrowBack } from 'react-icons/md';
 import './AuthPages.css';
 import loginBg from '../assets/login_bg.png';
 
@@ -92,7 +93,7 @@ const LoginPage: React.FC = () => {
           </Link>
 
           <Link to="/" className="auth-back-home">
-            <span className="material-symbols-outlined">arrow_back</span>
+            <MdArrowBack size={20} />
             <span>Back to Home</span>
           </Link>
         </div>

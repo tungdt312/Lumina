@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdArrowForward } from 'react-icons/md';
 
 interface Listing {
   id: string;
@@ -69,9 +70,7 @@ const FeaturedListings: React.FC = () => {
             href="#"
           >
             View All Properties
-            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">
-              arrow_forward
-            </span>
+            <MdArrowForward className="group-hover:translate-x-1 transition-transform" size={20} />
           </a>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[800px]">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdPublic, MdVerified } from 'react-icons/md';
 
 interface Location {
   id: string;
@@ -85,15 +86,11 @@ const PopularLocations: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2 bg-white px-6 py-3 rounded-lg border border-slate-200 shadow-sm">
-                <span className="material-symbols-outlined text-slate-900" data-icon="public">
-                  public
-                </span>
+                <MdPublic className="text-slate-900" size={20} />
                 <span className="font-bold text-sm">International Reach</span>
               </div>
               <div className="flex items-center gap-2 bg-white px-6 py-3 rounded-lg border border-slate-200 shadow-sm">
-                <span className="material-symbols-outlined text-slate-900" data-icon="verified">
-                  verified
-                </span>
+                <MdVerified className="text-slate-900" size={20} />
                 <span className="font-bold text-sm">Curated Selection</span>
               </div>
             </div>

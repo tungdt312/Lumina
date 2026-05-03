@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../services/api';
+import { MdMenu, MdClose, MdAccountCircle, MdRealEstateAgent, MdLogout } from 'react-icons/md';
 import './TopNavBar.css';
 
 const TopNavBar: React.FC = () => {
@@ -74,9 +75,7 @@ const TopNavBar: React.FC = () => {
               className="hamburger"
               aria-label="Toggle Navigation"
             >
-              <span className="material-symbols-outlined">
-                {isMobileMenuOpen ? 'close' : 'menu'}
-              </span>
+              {isMobileMenuOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
             </button>
 
             {/* Logo */}
@@ -121,9 +120,7 @@ const TopNavBar: React.FC = () => {
                   aria-label="Account menu"
                   aria-expanded={isPopoverOpen}
                 >
-                  <span className="material-symbols-outlined" data-icon="account_circle">
-                    account_circle
-                  </span>
+                  <MdAccountCircle size={28} />
                 </button>
 
                 {/* Dropdown popover */}
@@ -135,12 +132,21 @@ const TopNavBar: React.FC = () => {
                     </div>
 
                     <div className="dropdown-actions">
+                      <button
+                        onClick={() => handleNavigate('/my-properties')}
+                        role="menuitem"
+                        className="dropdown-item"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', padding: '12px 16px', background: 'transparent', border: 'none', color: 'var(--text-main)', textAlign: 'left', cursor: 'pointer', fontSize: '0.95rem' }}
+                      >
+                        <MdRealEstateAgent size={20} />
+                        My Properties
+                      </button>
                        <button
                         onClick={handleLogout}
                         role="menuitem"
                         className="signout-btn"
                       >
-                        <span className="material-symbols-outlined">logout</span>
+                        <MdLogout size={20} />
                         Sign out
                       </button>
                     </div>

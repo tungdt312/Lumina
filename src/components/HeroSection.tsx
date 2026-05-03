@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MdLocationOn, MdHomeWork } from 'react-icons/md';
 
 const HeroSection: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -32,9 +33,7 @@ const HeroSection: React.FC = () => {
           {/* Search Bar */}
           <div className="bg-white p-2 rounded-lg shadow-xl max-w-2xl flex flex-col md:flex-row items-center gap-2">
             <div className="flex-1 flex items-center px-4 gap-3 w-full border-b md:border-b-0 md:border-r border-slate-100 py-3">
-              <span className="material-symbols-outlined text-slate-500" data-icon="location_on">
-                location_on
-              </span>
+              <MdLocationOn className="text-slate-500" size={24} />
               <input
                 className="w-full border-none focus:ring-0 text-slate-900 font-medium placeholder:text-slate-500"
                 placeholder="Search by city or neighborhood"
@@ -44,9 +43,7 @@ const HeroSection: React.FC = () => {
               />
             </div>
             <div className="flex-1 flex items-center px-4 gap-3 w-full py-3">
-              <span className="material-symbols-outlined text-slate-500" data-icon="home_work">
-                home_work
-              </span>
+              <MdHomeWork className="text-slate-500" size={24} />
               <select
                 className="w-full border-none focus:ring-0 text-slate-900 font-medium appearance-none"
                 value={propertyType}

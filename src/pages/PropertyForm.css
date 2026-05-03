@@ -1,0 +1,326 @@
+/* ============================================================
+   PropertyForm.css — Premium Real Estate Form Design
+   Lumina Realty — Modern, Responsive, and Interactive
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --form-primary: #1264d1;
+  --form-primary-hover: #0d54b8;
+  --form-primary-glow: rgba(18, 100, 209, 0.15);
+  --form-bg: #f8fafc;
+  --form-card-bg: #ffffff;
+  --form-text: #0f172a;
+  --form-text-muted: #64748b;
+  --form-border: #e2e8f0;
+  --form-input-focus: #1264d1;
+  --form-radius: 16px;
+  --form-radius-sm: 8px;
+  --form-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --form-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.property-form-wrapper {
+  background-color: var(--form-bg);
+  min-height: 100vh;
+  font-family: 'Public Sans', sans-serif;
+  color: var(--form-text);
+  padding-bottom: 4rem;
+}
+
+.form-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ── Header ────────────────────────────────────────────────── */
+.form-header {
+  margin-bottom: 2.5rem;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--form-text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: color var(--form-transition);
+}
+
+.back-link:hover {
+  color: var(--form-primary);
+}
+
+.form-header h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin: 0 0 0.5rem 0;
+  color: var(--form-text);
+}
+
+.form-header p {
+  color: var(--form-text-muted);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* ── Form Card ─────────────────────────────────────────────── */
+.premium-form-card {
+  background: var(--form-card-bg);
+  border-radius: var(--form-radius);
+  box-shadow: var(--form-shadow);
+  border: 1px solid var(--form-border);
+  overflow: hidden;
+  animation: fadeInUp 0.7s ease-out;
+}
+
+.form-section {
+  padding: 2.5rem;
+  border-bottom: 1px solid var(--form-border);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.section-title h2 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--form-primary-glow);
+  color: var(--form-primary);
+  border-radius: 10px;
+}
+
+/* ── Grid System ───────────────────────────────────────────── */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-full {
+  grid-column: 1 / -1;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 640px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Input Styling ─────────────────────────────────────────── */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input-group label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: #f8fafc;
+  border: 1.5px solid var(--form-border);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--form-text);
+  transition: all var(--form-transition);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--form-primary);
+  box-shadow: 0 0 0 4px var(--form-primary-glow);
+}
+
+.form-input::placeholder {
+  color: #94a3b8;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #94a3b8;
+}
+
+.has-icon .form-input, .has-icon .form-select {
+  padding-left: 2.75rem;
+}
+
+/* ── Multi-select / Ward Logic ────────────────────────────── */
+.location-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .location-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Actions ───────────────────────────────────────────────── */
+.form-actions {
+  padding: 2rem 2.5rem;
+  background: #f8fafc;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all var(--form-transition);
+  border: none;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--form-text-muted);
+  border: 1.5px solid var(--form-border);
+}
+
+.btn-secondary:hover {
+  background: #f1f5f9;
+  color: var(--form-text);
+  border-color: #cbd5e1;
+}
+
+.btn-primary {
+  background: var(--form-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px var(--form-primary-glow);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--form-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--form-primary-glow);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── States & Animations ───────────────────────────────────── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--form-primary-glow);
+  border-top-color: var(--form-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.error-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
