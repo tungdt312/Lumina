@@ -113,7 +113,22 @@
   background: var(--form-primary-glow);
   color: var(--form-primary);
   border-radius: 10px;
+  transition: all var(--form-transition);
 }
+
+/* ── Section Colors ────────────────────────────────────────── */
+.section-basic .section-icon { background: rgba(18, 100, 209, 0.12); color: #1264d1; }
+.section-basic h2 { color: #1264d1; }
+
+.section-location .section-icon { background: rgba(16, 185, 129, 0.12); color: #059669; }
+.section-location h2 { color: #059669; }
+
+.section-features .section-icon { background: rgba(139, 92, 246, 0.12); color: #7c3aed; }
+.section-features h2 { color: #7c3aed; }
+
+.section-description .section-icon { background: rgba(245, 158, 11, 0.12); color: #d97706; }
+.section-description h2 { color: #d97706; }
+
 
 /* ── Grid System ───────────────────────────────────────────── */
 .form-grid {
@@ -324,3 +339,33 @@
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
 }
+
+/* ── Ward Loading States ──────────────────────────────────── */
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.small-spinner {
+  position: absolute;
+  right: 2.5rem;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--form-primary-glow);
+  border-top-color: var(--form-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  pointer-events: none;
+}
+
+.form-select.loading {
+  padding-right: 4rem;
+}
+
+.form-select:disabled {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+

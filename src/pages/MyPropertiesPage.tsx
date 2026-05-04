@@ -48,7 +48,7 @@ const MyPropertiesPage: React.FC = () => {
       const username = meResponse.data?.data?.username;
 
       // Construct RSQL filter
-      let filterQuery = `createdBy=='${username}'`;
+      let filterQuery = ``;
       if (search.trim()) {
         const term = encodeURIComponent(search.trim());
         filterQuery += ` and (title=='*${term}*' or lineAddress=='*${term}*')`;

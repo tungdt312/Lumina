@@ -38,6 +38,7 @@ const PropertyFormPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(isEditing);
+  const [isWardsLoading, setIsWardsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Reference data
@@ -67,10 +68,17 @@ const PropertyFormPage: React.FC = () => {
   });
 
   useEffect(() => {
-    fetchProvinces();
-    if (isEditing) {
-      fetchProperty();
-    }
+    const init = async () => {
+      await fetchProvinces();
+      if (isEditing) {
+        await fetchProperty();
+      } else {
+        // Default to Cần Thơ (province.id==2) for new listings as per instructions
+        setSelectedProvinceId('2');
+        getAllWards('2');
+      }
+    };
+    init();
   }, [id]);
 
   const fetchProvinces = async () => {
@@ -82,16 +90,21 @@ const PropertyFormPage: React.FC = () => {
     }
   };
 
-  const fetchWards = async (provinceId: string) => {
+  const getAllWards = async (provinceId: string) => {
     if (!provinceId) {
       setWards([]);
       return;
     }
+    setIsWardsLoading(true);
     try {
+      // Using filter by province.id as per help.MD instructions
+      // Can also use province.name=='Cần Thơ'
       const response = await apiClient.get(`/api/v1/wards?filter=province.id==${provinceId}&all=true&sort=name,asc`);
       setWards(response.data?.data?.content || []);
     } catch (err) {
       console.error('Failed to fetch wards', err);
+    } finally {
+      setIsWardsLoading(false);
     }
   };
 
@@ -129,7 +142,7 @@ const PropertyFormPage: React.FC = () => {
           const provinceId = wardRes.data?.data?.provinceId?.toString();
           if (provinceId) {
             setSelectedProvinceId(provinceId);
-            fetchWards(provinceId);
+            getAllWards(provinceId);
           }
         } catch (e) {
           console.error("Failed to fetch ward details for province mapping", e);
@@ -152,7 +165,7 @@ const PropertyFormPage: React.FC = () => {
     const provinceId = e.target.value;
     setSelectedProvinceId(provinceId);
     setFormData(prev => ({ ...prev, wardId: '' }));
-    fetchWards(provinceId);
+    getAllWards(provinceId);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -224,7 +237,7 @@ const PropertyFormPage: React.FC = () => {
 
         <form className="premium-form-card" onSubmit={handleSubmit}>
           {/* Section 1: Basic Info */}
-          <section className="form-section">
+          <section className="form-section section-basic">
             <div className="section-title">
               <div className="section-icon"><MdInfo size={20} /></div>
               <h2>Basic Information</h2>
@@ -297,7 +310,7 @@ const PropertyFormPage: React.FC = () => {
           </section>
 
           {/* Section 2: Location */}
-          <section className="form-section">
+          <section className="form-section section-location">
             <div className="section-title">
               <div className="section-icon"><MdLocationOn size={20} /></div>
               <h2>Location Details</h2>
@@ -332,24 +345,27 @@ const PropertyFormPage: React.FC = () => {
 
               <div className="input-group">
                 <label>Ward / District</label>
-                <select 
-                  name="wardId" 
-                  className="form-select" 
-                  value={formData.wardId} 
-                  onChange={handleChange}
-                  disabled={!selectedProvinceId}
-                >
-                  <option value="">Select Ward</option>
-                  {wards.map(w => (
-                    <option key={w.id} value={w.id}>{w.name}</option>
-                  ))}
-                </select>
+                <div className="select-wrapper">
+                  <select 
+                    name="wardId" 
+                    className={`form-select ${isWardsLoading ? 'loading' : ''}`}
+                    value={formData.wardId} 
+                    onChange={handleChange}
+                    disabled={!selectedProvinceId || isWardsLoading}
+                  >
+                    <option value="">{isWardsLoading ? 'Loading wards...' : 'Select Ward'}</option>
+                    {wards.map(w => (
+                      <option key={w.id} value={w.id}>{w.name}</option>
+                    ))}
+                  </select>
+                  {isWardsLoading && <div className="small-spinner"></div>}
+                </div>
               </div>
             </div>
           </section>
 
           {/* Section 3: Property Features */}
-          <section className="form-section">
+          <section className="form-section section-features">
             <div className="section-title">
               <div className="section-icon"><MdHomeWork size={20} /></div>
               <h2>Property Features</h2>
@@ -421,7 +437,7 @@ const PropertyFormPage: React.FC = () => {
           </section>
 
           {/* Section 4: Description */}
-          <section className="form-section">
+          <section className="form-section section-description">
             <div className="section-title">
               <div className="section-icon"><MdDescription size={20} /></div>
               <h2>Detailed Description</h2>
