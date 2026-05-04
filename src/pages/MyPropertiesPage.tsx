@@ -15,6 +15,7 @@ import {
   MdEdit, 
   MdDelete 
 } from 'react-icons/md';
+import { RANDOM_IMAGES } from '../components/ListingCard';
 import './MyProperties.css';
 
 interface PropertySummary {
@@ -144,10 +145,14 @@ const MyPropertiesPage: React.FC = () => {
           </div>
         ) : (
           <div className="properties-grid">
-            {properties.map((property) => (
+            {properties.map((property, index) => (
               <div key={property.id} className="property-card">
-                <div className="card-image-placeholder">
-                  <MdImage size={48} color="var(--text)" style={{ opacity: 0.3 }} />
+                <div className="card-image-wrapper">
+                  <img 
+                    src={RANDOM_IMAGES[index % RANDOM_IMAGES.length]} 
+                    alt={property.title} 
+                    className="property-image"
+                  />
                   <span className="status-badge" data-status={property.status}>{property.status}</span>
                 </div>
                 <div className="card-content">

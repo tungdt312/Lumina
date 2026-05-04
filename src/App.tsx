@@ -4,6 +4,8 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import MyPropertiesPage from './pages/MyPropertiesPage'
 import PropertyFormPage from './pages/PropertyFormPage'
+import PropertyDetailPage from './pages/PropertyDetailPage'
+import PropertiesListPage from './pages/PropertiesListPage'
 import './App.css'
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/properties" element={<PropertiesListPage />} />
+        <Route path="/properties/:id" element={<PropertyDetailPage />} />
         <Route path="/my-properties" element={<MyPropertiesPage />} />
         <Route path="/my-properties/new" element={<PropertyFormPage />} />
         <Route path="/my-properties/:id/edit" element={<PropertyFormPage />} />

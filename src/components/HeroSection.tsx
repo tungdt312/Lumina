@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MdLocationOn, MdHomeWork } from 'react-icons/md';
 
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
   const [location, setLocation] = useState('');
   const [propertyType, setPropertyType] = useState('Residential');
 
   const handleSearch = () => {
-    console.log('Search:', { location, propertyType });
+    navigate(`/properties?search=${encodeURIComponent(location)}`);
   };
 
   return (

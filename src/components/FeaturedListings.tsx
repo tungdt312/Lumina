@@ -1,127 +1,127 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MdArrowForward } from 'react-icons/md';
+import apiClient from '../services/api';
+import ListingCard, { RANDOM_IMAGES } from './ListingCard';
+import type { Listing } from './ListingCard';
 
-interface Listing {
-  id: string;
-  title: string;
-  location: string;
-  price: string;
-  beds: number;
-  baths: number;
-  sqft: number;
-  image: string;
-  isLarge?: boolean;
-  isExclusive?: boolean;
-}
+const FAKE_LISTINGS: Listing[] = [
+  {
+    id: 'fake-1',
+    title: 'The Obsidian Pavilion',
+    location: 'Beverly Hills, CA',
+    price: '$12,450,000',
+    beds: 5,
+    baths: 6,
+    sqft: 8200,
+    image: RANDOM_IMAGES[0],
+    isExclusive: true,
+  },
+  {
+    id: 'fake-2',
+    title: 'Azure Glass Penthouse',
+    location: 'Miami Beach, FL',
+    price: '$4,200,000',
+    beds: 3,
+    baths: 3,
+    sqft: 2400,
+    image: RANDOM_IMAGES[1],
+  },
+  {
+    id: 'fake-3',
+    title: 'Minimalist Alpine Villa',
+    location: 'Aspen, CO',
+    price: '$7,850,000',
+    beds: 4,
+    baths: 4,
+    sqft: 4500,
+    image: RANDOM_IMAGES[2],
+  },
+];
 
 const FeaturedListings: React.FC = () => {
-  const listings: Listing[] = [
-    {
-      id: '1',
-      title: 'The Obsidian Pavilion',
-      location: 'Beverly Hills, CA',
-      price: '$12,450,000',
-      beds: 5,
-      baths: 6,
-      sqft: 8200,
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCWPH31hietsOzRFm-iH8KO_5JLnXsukN1cVeBJIe9mPyhpkUiL5j3AivcMtSIPxr4jDm695QvK8AgTd23h3OZ0f1SmugieioOHtA69o1m6w0tuc7VeyM50NdeYWUsnnjvswPv1JvXe2197KdE0DCBzEZEkb-2bm9_Ep8tV3AV99eZDw-k1JmVtygNJ4b6vvPRqlKZt3dgcwqDl9vW8rkZFkl55U_q0Hn3LcFxf-DhHZc733XgvXRBlu8oB1gCd1Jv1tKs1lnSMbmRg',
-      isLarge: true,
-      isExclusive: true,
-    },
-    {
-      id: '2',
-      title: 'Azure Lofts',
-      location: 'Miami, FL',
-      price: '$2,100,000',
-      beds: 3,
-      baths: 2,
-      sqft: 1800,
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuDEFoVn9YaRnaAVgInUsF6hAs2rK-AcWn7inzTkcDo0AuSGyOpUXqeE8kSAlLg0Ru1YL_sXoNw0PJQB77_wkZJ9v8eYHotE7f0hyQ6NSm2fQRa9iwF0h2pj_mcFT1_p5NHHddomOw4_IaUdtbWligqv8grsy39IhTmiiF6GFaupG3SOk-wsSf14NLIfTMJao4VZQuII3WNoAp64m7cHmORYTsIgcE3-xVNE6V-MQrlbk3aCfyFgV8sV4AxnbuHTMUBsSQYZj_2Eqke4',
-    },
-    {
-      id: '3',
-      title: 'Nordic Sanctuary',
-      location: 'Aspen, CO',
-      price: '$4,850,000',
-      beds: 4,
-      baths: 3,
-      sqft: 3200,
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuDG5Br8EFva8swHs2cLUao2OjX4el3DFboEDk4BEFGZ_NplM_2ij7ZFryaQwzuDDNrZfw1PeasqwKUMDp7w_wXsW7jKV5DYGDPdZu-6aG71vadvdW8-G4dXw6D2DFNHtFbd2ARQOFiclSpMmd8aE0-5bAQ3FhUES93kPAiXO1gY6UknXf55sIL9qElZoa-9gFYcwxDg9-v6McKdt9qvLNe_Ym-59qyhebRRiaX-ss90I8tsJiCzEaOU2dqyB9-HwZT3fX993tXNVNHV',
-    },
-  ];
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      const response = await apiClient.get('/api/v1/properties?size=6&sort=createdAt,desc');
+      const apiData = response.data?.data?.content || [];
+      
+      if (apiData.length > 0) {
+        const mappedListings: Listing[] = apiData.map((prop: any, index: number) => ({
+          id: prop.id.toString(),
+          title: prop.title,
+          location: prop.lineAddress || 'Global Location',
+          price: new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(prop.price),
+          beds: prop.bedrooms || 0,
+          baths: prop.bathrooms || 0,
+          sqft: prop.landArea || 0,
+          image: RANDOM_IMAGES[index % RANDOM_IMAGES.length],
+          isExclusive: index % 3 === 0
+        }));
+        setListings(mappedListings);
+      } else {
+        setListings(FAKE_LISTINGS);
+      }
+    } catch (err) {
+      console.error('Failed to fetch properties', err);
+      setListings(FAKE_LISTINGS);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <section className="py-24 bg-white px-6">
+        <div className="max-w-screen-2xl mx-auto flex justify-center items-center h-[400px]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-slate-900"></div>
+            <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Curating Excellence...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (listings.length === 0) return null;
 
   return (
-    <section className="py-24 bg-white px-6">
+    <section className="py-32 bg-slate-50 px-6 overflow-hidden">
       <div className="max-w-screen-2xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
-              Current Collections
-            </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900">
-              Featured Listings
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-12 h-[1px] bg-emerald-500"></span>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600">
+                Exclusive Portfolio
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950 mb-4 leading-none">
+              Featured <span className="text-slate-300">Architecture</span>
             </h2>
+            <p className="text-slate-500 text-base font-medium max-w-lg leading-relaxed">
+              Explore our hand-selected collection of world-class properties that redefine the boundaries of luxury living and modern design.
+            </p>
           </div>
           <a
-            className="group flex items-center gap-2 text-slate-900 font-bold border-b-2 border-slate-900 pb-1"
-            href="#"
+            className="group flex items-center gap-4 text-slate-950 font-black text-sm uppercase tracking-widest border-b-2 border-slate-950 pb-2 transition-all hover:gap-6"
+            href="/properties"
           >
-            View All Properties
-            <MdArrowForward className="group-hover:translate-x-1 transition-transform" size={20} />
+            Explore All
+            <MdArrowForward className="group-hover:translate-x-1 transition-transform" size={24} />
           </a>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[800px]">
-          {/* Large Card */}
-          <div className="md:col-span-8 group relative overflow-hidden rounded-lg bg-slate-100">
-            <img
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              alt={listings[0].title}
-              src={listings[0].image}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-            <div className="absolute bottom-0 left-0 p-8 w-full">
-              <div className="flex justify-between items-end">
-                <div>
-                  {listings[0].isExclusive && (
-                    <span className="bg-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">
-                      Exclusive
-                    </span>
-                  )}
-                  <h3 className="text-white text-3xl font-bold mb-2">{listings[0].title}</h3>
-                  <p className="text-white/80 font-medium">{listings[0].location}</p>
-                </div>
-                <div className="text-white text-right">
-                  <p className="text-2xl font-black">{listings[0].price}</p>
-                  <div className="flex gap-4 mt-2 text-sm opacity-80">
-                    <span>{listings[0].beds} Bed</span>
-                    <span>{listings[0].baths} Bath</span>
-                    <span>{listings[0].sqft} sqft</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Side Grid Column */}
-          <div className="md:col-span-4 grid grid-rows-2 gap-6">
-            {listings.slice(1).map((listing) => (
-              <div key={listing.id} className="group relative overflow-hidden rounded-lg bg-slate-100">
-                <img
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  alt={listing.title}
-                  src={listing.image}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h4 className="text-white text-xl font-bold">{listing.title}</h4>
-                  <p className="text-white/80 text-sm">{listing.price}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {listings.slice(0, 3).map((listing) => (
+            <ListingCard key={listing.id} listing={listing} />
+          ))}
         </div>
       </div>
     </section>
