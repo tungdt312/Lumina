@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import apiClient from '../services/api';
 import TopNavBar from '../components/TopNavBar';
 import Footer from '../components/Footer';
@@ -7,7 +7,6 @@ import {
   MdSearch, 
   MdAdd, 
   MdRealEstateAgent, 
-  MdImage, 
   MdLocationOn, 
   MdBed, 
   MdShower, 
@@ -45,8 +44,7 @@ const MyPropertiesPage: React.FC = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const meResponse = await apiClient.get('/api/v1/auth/me');
-      const username = meResponse.data?.data?.username;
+      await apiClient.get('/api/v1/auth/me');
 
       // Construct RSQL filter
       let filterQuery = ``;

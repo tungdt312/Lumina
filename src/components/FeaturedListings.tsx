@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { MdArrowForward } from 'react-icons/md';
 import apiClient from '../services/api';
 import ListingCard, { RANDOM_IMAGES } from './ListingCard';
