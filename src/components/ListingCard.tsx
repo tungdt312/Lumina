@@ -31,6 +31,14 @@ const ListingCard: React.FC<{ listing: Listing }> = ({ listing }) => {
     <div 
       onClick={() => navigate(`/properties/${listing.id}`)}
       className="group relative h-[420px] rounded-[2rem] bg-white overflow-hidden transition-all duration-700 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] hover:-translate-y-3 cursor-pointer"
+      role="link"
+      tabIndex={0}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          navigate(`/properties/${listing.id}`);
+        }
+      }}
+      aria-label={`View ${listing.title} in ${listing.location} for ${listing.price}`}
     >
       {/* Hero Image */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">

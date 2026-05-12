@@ -13,24 +13,28 @@ const Footer: React.FC = () => {
           <a
             className="text-xs uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
             href="#"
+            aria-label="Read privacy policy"
           >
             Privacy Policy
           </a>
           <a
             className="text-xs uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
             href="#"
+            aria-label="Read terms of service"
           >
             Terms of Service
           </a>
           <a
             className="text-xs uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
             href="#"
+            aria-label="Accessibility information"
           >
             Accessibility
           </a>
           <a
             className="text-xs uppercase tracking-widest font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
             href="#"
+            aria-label="Contact Lumina Realty"
           >
             Contact
           </a>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { MdArrowForward } from 'react-icons/md';
 import apiClient from '../services/api';
 import ListingCard, { RANDOM_IMAGES } from './ListingCard';
 import type { Listing } from './ListingCard';
+import {MdArrowForward} from "react-icons/md";
 
 const FAKE_LISTINGS: Listing[] = [
   {
@@ -101,7 +101,7 @@ const FeaturedListings: React.FC = () => {
                 Exclusive Portfolio
               </span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950 mb-4 leading-none">
+            <h2 aria-label={"Featured Architecture"} className="text-4xl md:text-5xl font-black tracking-tighter text-slate-950 mb-4 leading-none">
               Featured <span className="text-slate-300">Architecture</span>
             </h2>
             <p className="text-slate-500 text-base font-medium max-w-lg leading-relaxed">

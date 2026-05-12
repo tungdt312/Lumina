@@ -47,24 +47,24 @@ const PopularLocations: React.FC = () => {
           <div className="order-2 md:order-1">
             <div className="grid grid-cols-2 gap-4">
               <div className="pt-12">
-                <div className="bg-white p-4 rounded-lg shadow-md mb-4 group cursor-pointer transition-all hover:-translate-y-1">
+                <div className="bg-white p-4 rounded-lg shadow-md mb-4 group cursor-pointer transition-all hover:-translate-y-1" role="link" tabIndex={0} aria-label={`Explore ${locations[0].name} with ${locations[0].properties} properties`}>
                   <img className="w-full h-40 object-cover rounded mb-4" alt={locations[0].name} src={locations[0].image} />
                   <h5 className="font-bold text-slate-900">{locations[0].name}</h5>
                   <p className="text-xs text-slate-500">{locations[0].properties} Properties</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg shadow-md group cursor-pointer transition-all hover:-translate-y-1">
+                <div className="bg-white p-4 rounded-lg shadow-md group cursor-pointer transition-all hover:-translate-y-1" role="link" tabIndex={0} aria-label={`Explore ${locations[1].name} with ${locations[1].properties} properties`}>
                   <img className="w-full h-64 object-cover rounded mb-4" alt={locations[1].name} src={locations[1].image} />
                   <h5 className="font-bold text-slate-900">{locations[1].name}</h5>
                   <p className="text-xs text-slate-500">{locations[1].properties} Properties</p>
                 </div>
               </div>
               <div>
-                <div className="bg-white p-4 rounded-lg shadow-md mb-4 group cursor-pointer transition-all hover:-translate-y-1">
+                <div className="bg-white p-4 rounded-lg shadow-md mb-4 group cursor-pointer transition-all hover:-translate-y-1" role="link" tabIndex={0} aria-label={`Explore ${locations[2].name} with ${locations[2].properties} properties`}>
                   <img className="w-full h-64 object-cover rounded mb-4" alt={locations[2].name} src={locations[2].image} />
                   <h5 className="font-bold text-slate-900">{locations[2].name}</h5>
                   <p className="text-xs text-slate-500">{locations[2].properties} Properties</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg shadow-md group cursor-pointer transition-all hover:-translate-y-1">
+                <div className="bg-white p-4 rounded-lg shadow-md group cursor-pointer transition-all hover:-translate-y-1" role="link" tabIndex={0} aria-label={`Explore ${locations[3].name} with ${locations[3].properties} properties`}>
                   <img className="w-full h-40 object-cover rounded mb-4" alt={locations[3].name} src={locations[3].image} />
                   <h5 className="font-bold text-slate-900">{locations[3].name}</h5>
                   <p className="text-xs text-slate-500">{locations[3].properties} Properties</p>
@@ -76,7 +76,7 @@ const PopularLocations: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 mb-4 block">
               Global Presence
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 mb-8">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 mb-8" aria-label={"Popular Locations"}>
               Popular Locations
             </h2>
             <p className="text-slate-600 text-lg leading-relaxed mb-8">

@@ -12,10 +12,16 @@ const CTASection: React.FC = () => {
           insights.
         </p>
         <div className="flex flex-col md:flex-row justify-center gap-4">
-          <button className="bg-white text-slate-900 px-10 py-4 rounded-lg font-bold text-lg hover:bg-slate-100 transition-all active:scale-95">
+          <button 
+            className="bg-white text-slate-900 px-10 py-4 rounded-lg font-bold text-lg hover:bg-slate-100 transition-all active:scale-95"
+            aria-label="Browse Inventory"
+          >
             Browse Inventory
           </button>
-          <button className="bg-transparent border-2 border-white/20 text-white px-10 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all active:scale-95">
+          <button 
+            className="bg-transparent border-2 border-white/20 text-white px-10 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all active:scale-95"
+            aria-label="Speak with an Agent"
+          >
             Speak with an Agent
           </button>
         </div>

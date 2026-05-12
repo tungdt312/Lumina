@@ -137,6 +137,7 @@ const TopNavBar: React.FC = () => {
                         role="menuitem"
                         className="dropdown-item"
                         style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', padding: '12px 16px', background: 'transparent', border: 'none', color: 'var(--text-main)', textAlign: 'left', cursor: 'pointer', fontSize: '0.95rem' }}
+                        aria-label="My Properties"
                       >
                         <MdRealEstateAgent size={20} />
                         My Properties
@@ -145,6 +146,7 @@ const TopNavBar: React.FC = () => {
                         onClick={handleLogout}
                         role="menuitem"
                         className="signout-btn"
+                        aria-label="Sign out"
                       >
                         <MdLogout size={20} />
                         Sign out
@@ -159,12 +161,14 @@ const TopNavBar: React.FC = () => {
                 <button
                   onClick={() => handleNavigate('/login')}
                   className="login-link"
+                  aria-label="Log in"
                 >
                   Log in
                 </button>
                 <button
                   onClick={() => handleNavigate('/register')}
                   className="register-btn"
+                  aria-label="Join Now"
                 >
                   Join Now
                 </button>

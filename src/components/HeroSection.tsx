@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative h-[870px] flex items-center overflow-hidden">
+    <section className="relative h-[870px] flex items-center overflow-hidden" aria-label={"Hero Section"}>
       <div className="absolute inset-0 z-0">
         <img
           className="w-full h-full object-cover"
@@ -33,23 +33,25 @@ const HeroSection: React.FC = () => {
             Curating exceptional living spaces for those who value structure, light, and legacy.
           </p>
           {/* Search Bar */}
-          <div className="bg-white p-2 rounded-lg shadow-xl max-w-2xl flex flex-col md:flex-row items-center gap-2">
+          <div className="bg-white p-2 rounded-lg shadow-xl max-w-2xl flex flex-col md:flex-row items-center gap-2" role="search">
             <div className="flex-1 flex items-center px-4 gap-3 w-full border-b md:border-b-0 md:border-r border-slate-100 py-3">
-              <MdLocationOn className="text-slate-500" size={24} />
+              <MdLocationOn className="text-slate-500" size={24} aria-hidden="true" />
               <input
                 className="w-full border-none focus:ring-0 text-slate-900 font-medium placeholder:text-slate-500"
                 placeholder="Search by city or neighborhood"
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
+                aria-label="Location search"
               />
             </div>
             <div className="flex-1 flex items-center px-4 gap-3 w-full py-3">
-              <MdHomeWork className="text-slate-500" size={24} />
+              <MdHomeWork className="text-slate-500" size={24} aria-hidden="true" />
               <select
                 className="w-full border-none focus:ring-0 text-slate-900 font-medium appearance-none"
                 value={propertyType}
                 onChange={(e) => setPropertyType(e.target.value)}
+                aria-label="Property type filter"
               >
                 <option>Residential</option>
                 <option>Commercial</option>
@@ -59,6 +61,7 @@ const HeroSection: React.FC = () => {
             <button
               className="bg-slate-900 text-white px-8 py-4 rounded-lg font-bold hover:bg-slate-800 transition-all w-full md:w-auto active:scale-95"
               onClick={handleSearch}
+              aria-label="Search for properties"
             >
               Search
             </button>
@@ -69,4 +72,4 @@ const HeroSection: React.FC = () => {
   );
 };
 
-export default HeroSection;
+export default HeroSection
