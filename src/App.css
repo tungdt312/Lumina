@@ -1,9 +1,6 @@
 /* App Styles - Tailwind CSS is configured in index.html */
 
 :root {
-  --accent: #0d131b;
-  --accent-bg: #f8f9fa;
-  --accent-border: #cbd5e1;
 }
 
 * {
