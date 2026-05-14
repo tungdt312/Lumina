@@ -87,7 +87,7 @@ const PropertyDetailPage: React.FC = () => {
           <div className="hero-overlay"></div>
           
           <div className="hero-content">
-            <Link to="/" className="back-btn-glass">
+            <Link to="/" className="back-btn-glass" aria-label="Back to Collection">
               <MdArrowBack /> Back to Collection
             </Link>
             
@@ -228,8 +228,8 @@ const PropertyDetailPage: React.FC = () => {
               <p>Connect with our architectural consultants for a private tour of this residence.</p>
               
               <div className="inquiry-actions">
-                <button className="btn-primary-premium">Book a Private Tour</button>
-                <button className="btn-secondary-premium">Contact Concierge</button>
+                <button className="btn-primary-premium" aria-label="Book a private tour">Book a Private Tour</button>
+                <button className="btn-secondary-premium" aria-label="Contact concierge">Contact Concierge</button>
               </div>
 
               <div className="inquiry-footer">

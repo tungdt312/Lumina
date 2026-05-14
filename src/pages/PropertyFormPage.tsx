@@ -251,6 +251,7 @@ const PropertyFormPage: React.FC = () => {
                     type="text" 
                     name="title" 
                     className="form-input"
+                    aria-label="Enter property title"
                     value={formData.title} 
                     onChange={handleChange} 
                     required 
@@ -267,6 +268,7 @@ const PropertyFormPage: React.FC = () => {
                     type="number" 
                     name="price" 
                     className="form-input"
+                    aria-label="Enter property price in USD"
                     value={formData.price} 
                     onChange={handleChange} 
                     required 
@@ -323,6 +325,7 @@ const PropertyFormPage: React.FC = () => {
                   type="text" 
                   name="lineAddress" 
                   className="form-input"
+                  aria-label="Enter street address"
                   value={formData.lineAddress} 
                   onChange={handleChange} 
                   placeholder="e.g. 123 Luxury Way"
@@ -376,61 +379,61 @@ const PropertyFormPage: React.FC = () => {
                 <label>Land Area (m²)</label>
                 <div className="input-wrapper has-icon">
                   <MdSquareFoot className="input-icon" size={18} />
-                  <input type="number" name="landArea" className="form-input" value={formData.landArea} onChange={handleChange} min="0" />
+                  <input type="number" name="landArea" className="form-input" aria-label="Enter land area in square meters" value={formData.landArea} onChange={handleChange} min="0" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Floor Area (m²)</label>
                 <div className="input-wrapper has-icon">
                   <MdLayers className="input-icon" size={18} />
-                  <input type="number" name="floorArea" className="form-input" value={formData.floorArea} onChange={handleChange} min="0" />
+                  <input type="number" name="floorArea" className="form-input" aria-label="Enter floor area in square meters" value={formData.floorArea} onChange={handleChange} min="0" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Road Width (m)</label>
                 <div className="input-wrapper has-icon">
                   <MdStraighten className="input-icon" size={18} />
-                  <input type="number" name="entranceRoadWidth" className="form-input" value={formData.entranceRoadWidth} onChange={handleChange} min="0" />
+                  <input type="number" name="entranceRoadWidth" className="form-input" aria-label="Enter road width in meters" value={formData.entranceRoadWidth} onChange={handleChange} min="0" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Bedrooms</label>
                 <div className="input-wrapper has-icon">
                   <MdMeetingRoom className="input-icon" size={18} />
-                  <input type="number" name="bedrooms" className="form-input" value={formData.bedrooms} onChange={handleChange} min="0" />
+                  <input type="number" name="bedrooms" className="form-input" aria-label="Enter number of bedrooms" value={formData.bedrooms} onChange={handleChange} min="0" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Bathrooms</label>
                 <div className="input-wrapper has-icon">
                   <MdBathtub className="input-icon" size={18} />
-                  <input type="number" name="bathrooms" className="form-input" value={formData.bathrooms} onChange={handleChange} min="0" />
+                  <input type="number" name="bathrooms" className="form-input" aria-label="Enter number of bathrooms" value={formData.bathrooms} onChange={handleChange} min="0" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Total Floors</label>
-                <input type="number" name="floors" className="form-input" value={formData.floors} onChange={handleChange} min="0" />
+                <input type="number" name="floors" className="form-input" aria-label="Enter total number of floors" value={formData.floors} onChange={handleChange} min="0" />
               </div>
 
               <div className="input-group">
                 <label>House Direction</label>
                 <div className="input-wrapper has-icon">
                   <MdExplore className="input-icon" size={18} />
-                  <input type="text" name="direction" className="form-input" value={formData.direction} onChange={handleChange} placeholder="e.g. North" />
+                  <input type="text" name="direction" className="form-input" aria-label="Enter house direction" value={formData.direction} onChange={handleChange} placeholder="e.g. North" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Balcony Direction</label>
                 <div className="input-wrapper has-icon">
                   <MdExplore className="input-icon" size={18} />
-                  <input type="text" name="balconyDirection" className="form-input" value={formData.balconyDirection} onChange={handleChange} placeholder="e.g. East" />
+                  <input type="text" name="balconyDirection" className="form-input" aria-label="Enter balcony direction" value={formData.balconyDirection} onChange={handleChange} placeholder="e.g. East" />
                 </div>
               </div>
               <div className="input-group">
                 <label>Interior</label>
                 <div className="input-wrapper has-icon">
                   <MdChair className="input-icon" size={18} />
-                  <input type="text" name="interior" className="form-input" value={formData.interior} onChange={handleChange} placeholder="e.g. Full" />
+                  <input type="text" name="interior" className="form-input" aria-label="Enter interior type" value={formData.interior} onChange={handleChange} placeholder="e.g. Full" />
                 </div>
               </div>
             </div>
@@ -447,6 +450,7 @@ const PropertyFormPage: React.FC = () => {
               <textarea 
                 name="description" 
                 className="form-textarea"
+                aria-label="Enter detailed property description"
                 value={formData.description} 
                 onChange={handleChange} 
                 placeholder="Describe your property in detail. Mention highlights, renovations, neighborhood, etc..."
@@ -459,7 +463,7 @@ const PropertyFormPage: React.FC = () => {
             <button type="button" className="btn btn-secondary" onClick={() => navigate('/my-properties')} disabled={isLoading}>
               Discard Changes
             </button>
-            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            <button type="submit" className="btn btn-primary" aria-label={isEditing ? 'Update property listing' : 'Publish property listing'} disabled={isLoading}>
               {isLoading ? (
                 <>
                   <div className="spinner" style={{ width: '18px', height: '18px', borderWidth: '2px' }}></div>

@@ -87,7 +87,8 @@ const PropertiesListPage: React.FC = () => {
               <MdSearch className="search-icon" size={24} />
               <input 
                 type="text" 
-                placeholder="Search by title or address..." 
+                placeholder="Search by title or address..."
+                aria-label="Search properties by title or address"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -102,7 +103,7 @@ const PropertiesListPage: React.FC = () => {
           <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">
             {totalElements} Properties Found
           </p>
-          <button className="flex items-center gap-2 text-slate-900 font-black text-xs uppercase tracking-widest border-b-2 border-slate-900 pb-1">
+          <button aria-label="Filter properties" className="flex items-center gap-2 text-slate-900 font-black text-xs uppercase tracking-widest border-b-2 border-slate-900 pb-1">
             <MdFilterList size={18} />
             Filters
           </button>
@@ -121,6 +122,7 @@ const PropertiesListPage: React.FC = () => {
                 <button 
                   onClick={handleLoadMore}
                   disabled={isLoading}
+                  aria-label="Load more properties"
                   className="group flex items-center gap-4 bg-slate-900 text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-slate-800 transition-all active:scale-95 disabled:opacity-50"
                 >
                   {isLoading ? 'Loading...' : 'Discover More'}
@@ -135,6 +137,7 @@ const PropertiesListPage: React.FC = () => {
             <p className="text-slate-500 mb-8">Try adjusting your search terms or filters to find what you're looking for.</p>
             <button 
               onClick={() => { setSearchTerm(''); setSearchParams({}); }}
+              aria-label="Clear search filters"
               className="px-8 py-4 bg-slate-900 text-white rounded-xl font-bold"
             >
               Clear Search
