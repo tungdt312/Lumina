@@ -103,12 +103,14 @@ const MyPropertiesPage: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="search-input"
+                aria-label="Search my properties by title or address"
               />
-              <button type="submit" className="btn-search">Search</button>
+              <button type="submit" className="btn-search" aria-label="Search properties">Search</button>
             </form>
             <button 
               className="btn-create"
               onClick={() => navigate('/my-properties/new')}
+              aria-label="Add a new property"
             >
               <MdAdd size={20} />
               Add Property
@@ -117,7 +119,7 @@ const MyPropertiesPage: React.FC = () => {
         </div>
 
         {error && (
-          <div className="error-alert">
+          <div className="error-alert" role="alert">
             {error}
           </div>
         )}
@@ -135,6 +137,7 @@ const MyPropertiesPage: React.FC = () => {
             <button 
               className="btn-primary"
               onClick={() => navigate('/my-properties/new')}
+              aria-label="Add your first property"
             >
               Add Your First Property
             </button>
@@ -170,6 +173,7 @@ const MyPropertiesPage: React.FC = () => {
                   <button 
                     className="action-btn edit-btn"
                     onClick={() => navigate(`/my-properties/${property.id}/edit`)}
+                    aria-label={`Edit ${property.title}`}
                   >
                     <MdEdit size={18} />
                     Edit
@@ -177,6 +181,7 @@ const MyPropertiesPage: React.FC = () => {
                   <button 
                     className="action-btn delete-btn"
                     onClick={() => handleDelete(property.id)}
+                    aria-label={`Delete ${property.title}`}
                   >
                     <MdDelete size={18} />
                     Delete
