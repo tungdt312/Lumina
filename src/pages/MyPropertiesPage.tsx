@@ -30,6 +30,7 @@ interface PropertySummary {
 }
 
 const MyPropertiesPage: React.FC = () => {
+  const [allProperties, setAllProperties] = useState<PropertySummary[]>([]);
   const [properties, setProperties] = useState<PropertySummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,29 +41,26 @@ const MyPropertiesPage: React.FC = () => {
     fetchMyProperties();
   }, []);
 
-  const fetchMyProperties = async (search = searchTerm) => {
+  // Filter client-side since GET /api/v1/properties/me does not support a `filter` query param
+  const applySearch = (list: PropertySummary[], term: string) => {
+    if (!term.trim()) return list;
+    const lower = term.toLowerCase();
+    return list.filter(
+      (p) =>
+        p.title?.toLowerCase().includes(lower) ||
+        p.lineAddress?.toLowerCase().includes(lower)
+    );
+  };
+
+  const fetchMyProperties = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      await apiClient.get('/api/v1/auth/me');
-
-      // Construct RSQL filter
-      let filterQuery = ``;
-      if (search.trim()) {
-        const term = encodeURIComponent(search.trim());
-        filterQuery += ` and (title=='*${term}*' or lineAddress=='*${term}*')`;
-      }
-
-      let response;
-      try {
-        response = await apiClient.get(`/api/v1/properties?filter=${filterQuery}&size=100`);
-      } catch (err) {
-        // Fallback if the specific RSQL query fails
-        response = await apiClient.get(`/api/v1/properties?size=100`);
-      }
-      
-      const content = response?.data?.data?.content || [];
-      setProperties(content);
+      // Use the authenticated /me endpoint — Bearer token is attached by the apiClient interceptor
+      const response = await apiClient.get('/api/v1/properties/me?size=100');
+      const content: PropertySummary[] = response?.data?.data?.content ?? [];
+      setAllProperties(content);
+      setProperties(applySearch(content, searchTerm));
     } catch (err: any) {
       console.error('Failed to fetch properties', err);
       setError('Failed to load your properties. Please try again later.');
@@ -73,7 +71,7 @@ const MyPropertiesPage: React.FC = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchMyProperties(searchTerm);
+    setProperties(applySearch(allProperties, searchTerm));
   };
 
   const handleDelete = async (id: number) => {
