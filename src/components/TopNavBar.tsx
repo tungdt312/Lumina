@@ -87,7 +87,7 @@ const TopNavBar: React.FC = () => {
             </div>
           </div>
 
-          {/* Center: Desktop Nav links */}
+          {/* Center: Desktop Nav links
           <div className="nav-links">
             {['Projects', 'Booking', 'Insights'].map((link) => (
               <a 
@@ -98,7 +98,7 @@ const TopNavBar: React.FC = () => {
                 {link}
               </a>
             ))}
-          </div>
+          </div> */}
 
           {/* Right side – conditional on auth state */}
           <div className="nav-right">
